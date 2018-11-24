@@ -72,6 +72,7 @@
 
         <!-- Column 1 -->
         <android.support.v7.widget.CardView
+            android:id="@+id/lightControlCardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -154,6 +155,7 @@
 
         <!-- Column 1 -->
         <android.support.v7.widget.CardView
+            android:id="@+id/fanControlCardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -193,6 +195,7 @@
 
         <!-- Column 2 -->
         <android.support.v7.widget.CardView
+            android:id="@+id/dashboardCardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
