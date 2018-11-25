@@ -24,8 +24,8 @@ public class HomeActivity extends AppCompatActivity {
 
         goToComputerStats();//Calling method to bring us to Computer Stat screen
         goToLightControl();//Calling method to bring us to Light control screen
-        goToFanControl();
-        goToDashboard();
+        goToFanControl();//Calling method to bring us to Fan control screen
+        goToDashboard();//Calling method to bring us to Dashboard screen
     }
 
     private void goToComputerStats() {//Method that brings us to Computer stat screen
@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void goToDashboard() {//Method that brings us to dashboard screen
+    private void goToDashboard() {//Method that brings us to dashboard scree    n
         CardView dashboard = findViewById(R.id.dashboardCardView);//computerStat equals computerStatCardView
         dashboard.setOnClickListener(new View.OnClickListener() {//Creating a click listener
             @Override
