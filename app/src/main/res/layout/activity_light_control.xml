@@ -1,9 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lightControlActivity">
+    tools:context=".computerStatActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/activityIcon"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:maxWidth="1dp"
+            android:maxHeight="1dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/colourcontrolicon" />
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="Light Control"
+            android:textAlignment="center"
+            android:textColor="@color/darkNight"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cardViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Preset Colours"
+            android:textAlignment="center"
+            android:textColor="@color/darkNight"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/magicBlue"
+            app:cardCornerRadius="20dp">
+
+            <Button
+                android:id="@+id/whiteColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/redColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/orangeColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/yellowColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/cyanColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="170dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/blueColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/purpleColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/pinkColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+            <Button
+                android:id="@+id/greenColourBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="380dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounderectangle"
+                android:clickable="true" />
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
