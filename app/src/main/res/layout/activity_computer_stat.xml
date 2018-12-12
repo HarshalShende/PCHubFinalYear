@@ -64,6 +64,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/avgCpuTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="110dp"
@@ -86,6 +87,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/avgGpuTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="210dp"
@@ -108,6 +110,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/avgHddTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -174,6 +177,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/cpuCurrentTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -185,6 +189,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/cpuMaxTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -208,6 +213,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/gpuCurrentTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -219,6 +225,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/gpuMaxTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -241,6 +248,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/hddCurrentTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -252,6 +260,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/hddMaxTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -274,6 +283,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/ssdCurrentTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -285,6 +295,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/ssdMaxTempReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -351,6 +362,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/cpuCurrentLoadReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -362,6 +374,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/cpuMaxLoadReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -385,6 +398,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/gpuCurrentLoadReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
@@ -396,6 +410,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/gpuMaxLoadReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
@@ -440,6 +455,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/computerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
@@ -462,6 +478,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/motherboardName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
@@ -485,6 +502,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/cpuName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
@@ -507,6 +525,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/gpuName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"

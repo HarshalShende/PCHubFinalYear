@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "979082746143-9l0kudsov2hta7hlig8pcc2gs3fngmcm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vladislavsvasiljevs.pchub",
+            "certificate_hash": "3b445bd90f2774f178049e8ba701e5d06598ce60"
+          }
+        },
+        {
           "client_id": "979082746143-hbfql76epe31ne9rs0762s039kj557a4.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979082746143-hbfql76epe31ne9rs0762s039kj557a4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
