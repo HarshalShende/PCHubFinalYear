@@ -1,4 +1,4 @@
-package com.example.vladislavsvasiljevs.pchub;
+package com.example.vladislavsvasiljevs.pchub.Models;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
@@ -7,25 +7,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class stats2 {
+public class cpuLoadReading {
     public String Value;
-    public String Min;
+    public String Max;
 
-    public stats2() {
+    public cpuLoadReading() {
     }
 
-    public stats2(String value, String min) {
+    public cpuLoadReading(String value, String max) {
         this.Value = value;
-        this.Min = min;
+        this.Max = max;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("Max", Value);
-        result.put("Min", Min);
+        result.put("Value", Value);
+        result.put("Max", Max);
 
         return result;
     }
-
 }

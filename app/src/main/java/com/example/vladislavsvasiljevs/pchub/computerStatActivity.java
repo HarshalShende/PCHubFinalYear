@@ -5,7 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.vladislavsvasiljevs.pchub.Models.computerNameReading;
+import com.example.vladislavsvasiljevs.pchub.Models.cpuLoadReading;
+import com.example.vladislavsvasiljevs.pchub.Models.cpuNameReading;
 import com.example.vladislavsvasiljevs.pchub.Models.cpuTempReading;
+import com.example.vladislavsvasiljevs.pchub.Models.gpuLoadReading;
+import com.example.vladislavsvasiljevs.pchub.Models.gpuNameReading;
+import com.example.vladislavsvasiljevs.pchub.Models.gpuTempReading;
+import com.example.vladislavsvasiljevs.pchub.Models.hddTempReading;
+import com.example.vladislavsvasiljevs.pchub.Models.motherboardNameReading;
+import com.example.vladislavsvasiljevs.pchub.Models.ssdTempReading;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,8 +26,6 @@ public class computerStatActivity extends AppCompatActivity {
     private static final String TAG = "MessageActivity";
     //private static final String REQUIRED = "Required";
 
-    private TextView tvAuthor;
-    private TextView tvTime;
 
     //Average Temperatures
     private TextView avgCpuTemp;//Displays average CPU Temperature
@@ -50,12 +57,46 @@ public class computerStatActivity extends AppCompatActivity {
     private TextView cpuName;//Computers CPU name
     private TextView gpuName;//Computer GPU name
 
+    
+    //Database Reference
+    private DatabaseReference mDatabase;//Variable to get the instance of the FireBase database
+    
+    
+    //Database Reference for  Computer Temperature Reading section
+    private DatabaseReference cpuTempReference;
+    private DatabaseReference gpuTempReference;
+    private DatabaseReference hddTempReference;
+    private DatabaseReference ssdTempReference;
 
-    private DatabaseReference mDatabase;
-    private DatabaseReference mMessageReference;
-    private DatabaseReference mMessageReference2;
-    private ValueEventListener mMessageListener;
-    private ValueEventListener mMessageListener2;
+    
+    //Value Event Listener for Computer Temperature Reading section
+    private ValueEventListener cpuTempListener;
+    private ValueEventListener gpuTempListener;
+    private ValueEventListener hddTempListener;
+    private ValueEventListener ssdTempListener;
+
+
+    //Database Reference for Computer Load Reading section
+    private DatabaseReference cpuLoadReference;
+    private DatabaseReference gpuLoadReference;
+
+
+    //Value Event Listener for Computer Load Reading section
+    private ValueEventListener cpuLoadListener;
+    private ValueEventListener gpuLoadListener;
+
+
+    //Database Reference for Computer Information section
+    private DatabaseReference computerNameReference;
+    private DatabaseReference motherboardNameReference;
+    private DatabaseReference cpuNameReference;
+    private DatabaseReference gpuNameReference;
+
+    //Value Event Listener for Computer Information section
+    private ValueEventListener computerNameListener;
+    private ValueEventListener motherboardNameListener;
+    private ValueEventListener cpuNameListener;
+    private ValueEventListener gpuNameListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +123,9 @@ public class computerStatActivity extends AppCompatActivity {
 
         //Computer Load Readings getting ID's
         cpuCurrentLoadReading = findViewById(R.id.cpuCurrentLoadReading);
-        motherboardName = findViewById(R.id.motherboardName);
-        cpuName = findViewById(R.id.cpuName);
-        gpuName = findViewById(R.id.gpuName);
-
+        cpuMaxLoadReading = findViewById(R.id.cpuMaxLoadReading);
+        gpuCurrentLoadReading = findViewById(R.id.gpuCurrentLoadReading);
+        gpuMaxLoadReading = findViewById(R.id.gpuMaxLoadReading);
 
         //Computer Information getting ID's
         computerName = findViewById(R.id.computerName);
@@ -94,26 +134,38 @@ public class computerStatActivity extends AppCompatActivity {
         gpuName = findViewById(R.id.gpuName);
 
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();//Getting a instance of FireBase database
+        //Computer Temperature Readings - References
+        cpuTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/6");//Link to CPU temps readings
+        gpuTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/3/Children/1/Children/0");//Link to GPU temps readings
+        hddTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/4/Children/0/Children/0");//Link to HDD temps readings
+        ssdTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/5/Children/0/Children/0");//Link to SSD temps readings
 
-        tvAuthor = findViewById(R.id.activityTitle);
-        tvTime = findViewById(R.id.cardViewTitle);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mMessageReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/6");
-        mMessageReference2 = FirebaseDatabase.getInstance().getReference("PCHub/message/messages");
+        //Computer Temperature Reading - References
+        cpuLoadReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/2/Children/0");//Link to CPU load readings
+        gpuLoadReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/3/Children/2/Children/0");//Link to GPU load readings
+
+
+        //Computer Information Readings - References
+        computerNameReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0");//Link to Computers name reading
+        motherboardNameReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/0");//Link to Motherboard Name reading
+        cpuNameReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1");//Link to CPU Name
+        gpuNameReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/3");//Link to GPU Name
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        ValueEventListener messageListener = new ValueEventListener() {
+        //CPU Temp Readings from FireBase
+        ValueEventListener cpuListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     cpuTempReading cpuTempReading = dataSnapshot.getValue(cpuTempReading.class);
 
-                   // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
 
                     cpuCurrentTempReading.setText(cpuTempReading.Value);
                     cpuMaxTempReading.setText(cpuTempReading.Max);
@@ -129,18 +181,275 @@ public class computerStatActivity extends AppCompatActivity {
                 cpuMaxTempReading.setText("");
             }
         };
-        mMessageReference.addValueEventListener(messageListener);
+        cpuTempReference.addValueEventListener(cpuListener);
 
         // copy for removing at onStop()
-        mMessageListener = messageListener;
+        cpuTempListener = cpuListener;
 
+
+        //GPU Temp Readings from FireBase
+        ValueEventListener gpuListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    gpuTempReading gpuTempReading = dataSnapshot.getValue(gpuTempReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    gpuCurrentTempReading.setText(gpuTempReading.Value);
+                    gpuMaxTempReading.setText(gpuTempReading.Max);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                cpuCurrentTempReading.setText("");
+                cpuMaxTempReading.setText("");
+            }
+        };
+        gpuTempReference.addValueEventListener(gpuListener);
+
+        // copy for removing at onStop()
+        gpuTempListener = gpuListener;
+
+
+        //HDD Temp Readings from FireBase
+        ValueEventListener hddListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    hddTempReading hddTempReading = dataSnapshot.getValue(hddTempReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    hddCurrentTempReading.setText(hddTempReading.Value);
+                    hddMaxTempReading.setText(hddTempReading.Max);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                hddCurrentTempReading.setText("");
+                hddMaxTempReading.setText("");
+            }
+        };
+        hddTempReference.addValueEventListener(hddListener);
+
+        // copy for removing at onStop()
+        hddTempListener = hddListener;
+
+
+        //SSD Temp Readings from FireBase
+        ValueEventListener ssdListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ssdTempReading ssdTempReading = dataSnapshot.getValue(ssdTempReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    ssdCurrentTempReading.setText(ssdTempReading.Value);
+                    ssdMaxTempReading.setText(ssdTempReading.Max);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                ssdCurrentTempReading.setText("");
+                ssdMaxTempReading.setText("");
+            }
+        };
+        ssdTempReference.addValueEventListener(ssdListener);
+
+        // copy for removing at onStop()
+        ssdTempListener = ssdListener;
+//End of Computer Temperature readings section
+
+
+        //CPU Load Readings from FireBase
+        ValueEventListener cpuloadListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    cpuLoadReading cpuLoadReading = dataSnapshot.getValue(cpuLoadReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    cpuCurrentLoadReading.setText(cpuLoadReading.Value);
+                    cpuMaxLoadReading.setText(cpuLoadReading.Max);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                ssdCurrentTempReading.setText("");
+                ssdMaxTempReading.setText("");
+            }
+        };
+        cpuLoadReference.addValueEventListener(cpuloadListener);
+
+        // copy for removing at onStop()
+        cpuLoadListener = cpuloadListener;
+
+
+        //GPU Load Readings from FireBase
+        ValueEventListener gpuloadListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    gpuLoadReading gpuLoadReading = dataSnapshot.getValue(gpuLoadReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    gpuCurrentLoadReading.setText(gpuLoadReading.Value);
+                    gpuMaxLoadReading.setText(gpuLoadReading.Max);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                gpuCurrentLoadReading.setText("");
+                gpuMaxLoadReading.setText("");
+            }
+        };
+        gpuLoadReference.addValueEventListener(gpuloadListener);
+
+        // copy for removing at onStop()
+        gpuLoadListener = gpuloadListener;
+//End of Computer Load Reading Section
+
+
+        //Computer Name from FireBase
+        ValueEventListener computernameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    computerNameReading computerNameReading = dataSnapshot.getValue(computerNameReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    computerName.setText(computerNameReading.Text);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                computerName.setText("Not Found");
+            }
+        };
+        computerNameReference.addValueEventListener(computernameListener);
+
+        // copy for removing at onStop()
+        computerNameListener = computernameListener;
+
+
+        //Motherboard name from FireBase
+        ValueEventListener motherboardnameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    motherboardNameReading motherboardNameReading = dataSnapshot.getValue(motherboardNameReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    motherboardName.setText(motherboardNameReading.Text);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                motherboardName.setText("Not Found");
+            }
+        };
+        motherboardNameReference.addValueEventListener(motherboardnameListener);
+
+        // copy for removing at onStop()
+        motherboardNameListener = motherboardnameListener;
+
+
+        //CPU name from FireBase
+        ValueEventListener cpunameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    cpuNameReading cpuNameReading = dataSnapshot.getValue(cpuNameReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    cpuName.setText(cpuNameReading.Text);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                cpuName.setText("Not Found");
+            }
+        };
+        cpuNameReference.addValueEventListener(cpunameListener);
+
+        // copy for removing at onStop()
+        cpuNameListener = cpunameListener;
+
+
+        //CPU name from FireBase
+        ValueEventListener gpunameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    gpuNameReading gpuNameReading = dataSnapshot.getValue(gpuNameReading.class);
+
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    gpuName.setText(gpuNameReading.Text);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                gpuName.setText("Not Found");
+            }
+        };
+        gpuNameReference.addValueEventListener(gpunameListener);
+
+        // copy for removing at onStop()
+        gpuNameListener = gpunameListener;
     }
+
+
+
 
 //        ValueEventListener messageListener2 = new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //                if (dataSnapshot.exists()) {
-//                    stats2 message2 = dataSnapshot.getValue(stats2.class);
+//
 //
 //                    Log.e(TAG, "onDataChange: Message data is updated: " + ", " + message2.Value + ", ");
 //
