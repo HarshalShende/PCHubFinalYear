@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Read JSON</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+
+</head>
+
+<body>
+    <!-- <div class="mypanel"></div> -->
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <div id="data">
+
+    </div>
+    <!-- <script>
+	var update_loop = setInterval(getData, 5000);
+	getData();
+	function getData(){
+    $.getJSON('http://192.168.222.123:8085/data.json', function(data) {
+        var text = `Date: ${data.id}<br>
+                    Time: ${data.Text}<br>
+                    Unix time: ${data.Children}
+                    `
+                    
+                
+        
+        $(".mypanel").html(text);
+	
+		
+    });
+	}
+    </script> -->
+
+    <script>
+        var config = {
+            apiKey: "AIzaSyCi6vbe4tFzsZDAUIySry2gmP_gLXehhek",
+            authDomain: "pchub-2018.firebaseapp.com",
+            databaseURL: "https://pchub-2018.firebaseio.com",
+            projectId: "pchub-2018",
+            storageBucket: "pchub-2018.appspot.com",
+            messagingSenderId: "979082746143"
+        };
+        firebase.initializeApp(config);
+
+        // Get a reference to the database service
+        var database = firebase.database();
+        var update_loop = setInterval(getData, 10000);
+        getData();
+        function getData() {
+            var url = 'http://192.168.1.13:8085/data.json';
+            $.ajax({
+                url: url,
+                method: 'GET',
+            }).done(function (result) {
+                var data = result.Children;
+                var childrenList = result.Children.slice();
+                // console.log(result.Children.length);
+
+                var i = 0;
+                var hosData = "<table border='1'>";
+                hosData += "<tr>";
+
+                hosData += "<th>";
+                hosData += 'id';
+                hosData += "</th>";
+
+                hosData += "<th>";
+                hosData += 'Text';
+                hosData += "</th>";
+
+                hosData += "<th>";
+                hosData += 'Min';
+                hosData += "</th>";
+
+                hosData += "<th>";
+                hosData += 'Value';
+                hosData += "</th>";
+
+                hosData += "<th>";
+                hosData += 'Max';
+                hosData += "</th>";
+
+                var playersRef = firebase.database().ref("PCHub/");
+
+                playersRef.set({
+                    ComputerStatistics: {
+                        number: result
+                    }
+                });
+
+                //  hosData += "<th>";
+                //  hosData += 'ImageURL';
+                // hosData += "</th>";
+
+                hosData += "</tr>";
+                currObj = Object.assign({}, result);
+                while (childrenList.length) {
+                    var currObj = childrenList.splice(0, 1)[0];
+                    childrenList = currObj.Children.concat(childrenList);
+                    hosData += "<tr>";
+                    hosData += "<td>";
+                    hosData += currObj.id;
+                    hosData += "</td>";
+                    hosData += "<td>";
+                    hosData += currObj.Text;
+                    hosData += "</td>";
+                    hosData += "<td>";
+                    hosData += currObj.Min;
+                    hosData += "</td>";
+                    hosData += "<td>"
+                    hosData += currObj.Value;
+                    hosData += "</td>";
+                    hosData += "<td>";
+                    hosData += currObj.Max;
+                    hosData += "</td>";
+                    hosData += "<td>";
+                    // hosData += currObj.ImageURL;
+                    // hosData += "</td>";
+                    // hosData += "</tr>";
+
+                }
+                hosData += "</table>";
+
+                $("#data").html(hosData);
+
+                return hosData
+
+            });
+        }
+    </script>
+
+
+
+    <!--
+     <script>
+
+        var getJSON = function(url, callback) {
+        
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            
+            xhr.onload = function() {
+            
+                var status = xhr.status;
+                
+                if (status == 200) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(status);
+                }
+            };
+            
+            xhr.send();
+        };
+        
+        getJSON('http://192.168.222.123:8085/data.json',  function(err, data) {
+            
+            if (err != null) {
+                console.error(err);
+            } else {
+                
+                var text = `Date: ${data.id}
+        Time: ${data.Text}
+        Unix time: ${data.Children }`
+            
+                console.log(text);
+            }
+        });
+        
+        </script>
+  -->
+</body>
+
+</html>
