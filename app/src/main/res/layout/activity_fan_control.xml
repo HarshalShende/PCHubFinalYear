@@ -6,4 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".fanControlActivity">
 
+    <LinearLayout
+        android:id="@+id/RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="838dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/activityIcon"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:maxWidth="1dp"
+            android:maxHeight="1dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/fanicon" />
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="Fan Control"
+            android:textAlignment="center"
+            android:textColor="@color/darkNight"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        app:cardBackgroundColor="@color/magicBlue"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp">
+
+            <TextView
+                android:id="@+id/lightControlTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Fan Control"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/snowWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/greenBtn"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="55dp"
+                android:background="@drawable/greenbutton"
+                android:text="Turn fan ON"
+                android:textAllCaps="false"
+                android:textColor="@color/snowWhite"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/redBtn"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="240dp"
+                android:layout_marginTop="55dp"
+                android:background="@drawable/redbutton"
+                android:text="Turn fan OFF"
+                android:textAllCaps="false"
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+
 </android.support.constraint.ConstraintLayout>
