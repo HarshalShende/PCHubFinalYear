@@ -141,10 +141,10 @@ public class HomeActivity extends AppCompatActivity {
         computerOn.setVisibility(View.GONE);
     }
 
-//This snippet has came from the following webiste: https://www.tutorialspoint.com/how-do-i-display-an-alert-dialog-on-android
+    //This snippet has came from the following webiste: https://www.tutorialspoint.com/how-do-i-display-an-alert-dialog-on-android
 //    Some parts where edited by me (Vladislavs Vasiljes) to match my projects requirements
     private void alertDialogOnButton() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("If your computer is already turned on and you wish to turn it off then tap Continue. " +
                 "If your computer is turned off but you wish to turn it on then tap Continue. Otherwise tap Cancel.");
         dialog.setTitle("Warning!");
@@ -152,26 +152,26 @@ public class HomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(),"Yes is clicked",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
                         databaseReference.child("computerControl").setValue(1);
                         onButtonGONE();
                         offButtonVisible();
                     }
                 });
-        dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"cancel is clicked",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
             }
         });
-        AlertDialog alertDialog=dialog.create();
+        AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
 
     //This snippet has came from the following webiste: https://www.tutorialspoint.com/how-do-i-display-an-alert-dialog-on-android
 //    Some parts where edited by me (Vladislavs Vasiljes) to match my projects requirements
     private void alertDialogOffButton() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("If your computer is already turned on and you wish to turn it off then tap Continue. " +
                 "If your computer is turned off but you wish to turn it on then tap Continue. Otherwise tap Cancel.");
         dialog.setTitle("Warning!");
@@ -179,19 +179,19 @@ public class HomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(),"Yes is clicked",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
                         databaseReference.child("computerControl").setValue(1);
                         onButtonVisible();
                         offButtonGONE();
                     }
                 });
-        dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"cancel is clicked",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
             }
         });
-        AlertDialog alertDialog=dialog.create();
+        AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
 }
