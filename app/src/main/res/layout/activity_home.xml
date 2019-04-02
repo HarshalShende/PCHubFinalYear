@@ -32,9 +32,9 @@
 
         <Button
             android:id="@+id/greenBtn"
-            android:layout_width="150dp"
+            android:layout_width="250dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="85dp"
             android:layout_marginTop="55dp"
             android:background="@drawable/greenbutton"
             android:text="Turn ON Computer"
@@ -44,9 +44,9 @@
 
         <Button
             android:id="@+id/redBtn"
-            android:layout_width="150dp"
+            android:layout_width="250dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="240dp"
+            android:layout_marginLeft="85dp"
             android:layout_marginTop="55dp"
             android:background="@drawable/redbutton"
             android:text="Turn OFF Computer"
