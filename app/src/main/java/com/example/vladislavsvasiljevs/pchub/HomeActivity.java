@@ -121,22 +121,22 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void offButtonGONE() {
+    private void offButtonGONE() {//Hiding off button method
         Button computerOff = findViewById(R.id.redBtn);
         computerOff.setVisibility(View.GONE);
     }
 
-    private void offButtonVisible() {
+    private void offButtonVisible() {//Showing off button method
         Button computerOff = findViewById(R.id.redBtn);
         computerOff.setVisibility(View.VISIBLE);
     }
 
-    private void onButtonVisible() {
+    private void onButtonVisible() {//Showing on button method
         Button computerOn = findViewById(R.id.greenBtn);
         computerOn.setVisibility(View.VISIBLE);
     }
 
-    private void onButtonGONE() {
+    private void onButtonGONE() {//Hiding on Button method
         Button computerOn = findViewById(R.id.greenBtn);
         computerOn.setVisibility(View.GONE);
     }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "979082746143-p38fkdv3vrj8gkk4ceujca5pseapua95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vladislavsvasiljevs.pchub",
+            "certificate_hash": "04934da55e288313073d326f1c56ebcb238cf58d"
+          }
+        },
+        {
           "client_id": "979082746143-9l0kudsov2hta7hlig8pcc2gs3fngmcm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "979082746143-hbfql76epe31ne9rs0762s039kj557a4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
