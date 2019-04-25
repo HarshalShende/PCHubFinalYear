@@ -133,13 +133,12 @@ public class computerStatActivity extends AppCompatActivity {
         cpuName = findViewById(R.id.cpuName);
         gpuName = findViewById(R.id.gpuName);
 
-
         mDatabase = FirebaseDatabase.getInstance().getReference();//Getting a instance of FireBase database
         //Computer Temperature Readings - References
-        cpuTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/6");//Link to CPU temps readings
+        cpuTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/4");//Link to CPU temps readings
         gpuTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/3/Children/1/Children/0");//Link to GPU temps readings
-        hddTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/4/Children/0/Children/0");//Link to HDD temps readings
-        ssdTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/5/Children/0/Children/0");//Link to SSD temps readings
+        hddTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/4/Children/1");//Link to HDD temps readings
+        ssdTempReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/4/Children/0/Children/0");//Link to SSD temps readings
 
 
         //Computer Temperature Reading - References
