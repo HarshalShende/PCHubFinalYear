@@ -83,5 +83,5 @@ while True:
         message_body = "Your GPU has reached the temperature limit you have set, please check on your computer "+"Your computers current GPU tempareture is "+currentGPUTemp
         result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
         print (result)
-    
-    time.sleep(30)    
+    Frequency = firebase.get(firebaseURL, '/EmailNotification/FrequencyOfNotifications')
+    time.sleep(Frequency)   
