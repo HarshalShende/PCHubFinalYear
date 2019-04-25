@@ -9,7 +9,7 @@ firebaseURL = 'https://pchub-2018.firebaseio.com/'  # FirebasURL on its own so w
 # Connect the Grove Ultrasonic Ranger to digital port D4
 # SIG,NC,VCC,GND
 
-Relay_pin = 2
+Relay_pin = 3
 
 pinMode(Relay_pin,"OUTPUT")
   
