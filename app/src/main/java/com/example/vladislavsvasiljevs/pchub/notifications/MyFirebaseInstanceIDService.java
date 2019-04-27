@@ -2,12 +2,9 @@ package com.example.vladislavsvasiljevs.pchub.notifications;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.example.vladislavsvasiljevs.pchub.Constants;
-
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {

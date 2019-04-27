@@ -41,25 +41,23 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+        //Getting our FCM token, which gets printed in logcat
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-
                             return;
                         }
-
-
                         String token = task.getResult().getToken();
                         String msg = getString(R.string.fcm_token, token);
                         Log.d(TAG, msg);
-
                     }
                 });
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();//Getting database reference
 
         offButtonGONE();//By default the turn off button is set to GONE, When On button clicked, then this button will appear
 

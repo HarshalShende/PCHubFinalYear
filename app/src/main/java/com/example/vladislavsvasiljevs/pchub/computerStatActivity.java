@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.vladislavsvasiljevs.pchub.Models.computerNameReading;
 import com.example.vladislavsvasiljevs.pchub.Models.cpuLoadReading;
@@ -21,11 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class computerStatActivity extends AppCompatActivity {
     private static final String TAG = "MessageActivity";
     //private static final String REQUIRED = "Required";
-
+    DatabaseHelper mDatabaseHelper;
 
     //Average Temperatures
     private TextView avgCpuTemp;//Displays average CPU Temperature
@@ -102,7 +107,7 @@ public class computerStatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_computer_stat);
-
+        mDatabaseHelper = new DatabaseHelper(this);
 
         //Average Temperatures getting ID's
         avgCpuTemp = findViewById(R.id.avgCpuTemp);
@@ -168,6 +173,14 @@ public class computerStatActivity extends AppCompatActivity {
 
                     cpuCurrentTempReading.setText(cpuTempReading.Value);
                     cpuMaxTempReading.setText(cpuTempReading.Max);
+                    Date c = Calendar.getInstance().getTime();//Getting time and date
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");//Formatting date and time to be dd/mm/yyyy
+                    String formattedDate = df.format(c);
+                    String changeToString = cpuTempReading.Value;//Storing cpuTempReading in changeToString
+                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+","");//Removing degree sign from our string
+                    Log.e(TAG, "gg "+formattedDate);
+                        AddCPUData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
+//                    mDatabaseHelper.deleteAll();
                 }
             }
 
@@ -439,8 +452,30 @@ public class computerStatActivity extends AppCompatActivity {
 
         // copy for removing at onStop()
         gpuNameListener = gpunameListener;
+
+
+
+
     }
 
+
+    public void AddCPUData(String newEntry,String newEntry2) {
+        boolean insertData = mDatabaseHelper.addCPUData(newEntry,newEntry2);
+
+        if (insertData) {
+            toastMessage("Data Successfully Inserted!");
+        } else {
+            toastMessage("Something went wrong");
+        }
+    }
+
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
 
 
 
@@ -471,6 +506,7 @@ public class computerStatActivity extends AppCompatActivity {
 //        // copy for removing at onStop()
 //        mMessageListener = messageListener2;
 //    }
+
 
 
 
