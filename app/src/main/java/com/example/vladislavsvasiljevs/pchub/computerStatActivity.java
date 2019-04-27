@@ -179,8 +179,7 @@ public class computerStatActivity extends AppCompatActivity {
                     String changeToString = cpuTempReading.Value;//Storing cpuTempReading in changeToString
                     changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+","");//Removing degree sign from our string
                     Log.e(TAG, "gg "+formattedDate);
-                        AddCPUData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
-//                    mDatabaseHelper.deleteAll();
+                    AddCPUData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
                 }
             }
 

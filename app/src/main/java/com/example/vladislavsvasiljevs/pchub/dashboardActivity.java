@@ -1,104 +1,46 @@
 package com.example.vladislavsvasiljevs.pchub;
 
+import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import com.example.vladislavsvasiljevs.pchub.charts.cpuBarChart;
 
 
-public class dashboardActivity extends AppCompatActivity {
+public class dashboardActivity extends ListActivity {
 
-    DatabaseHelper mDatabaseHelper;
-    SQLiteDatabase db;
-    Button showUpdateButton;
-    Button deleteData;
-    BarChart barChart;
+    String classes[] = { "CPU Temperature BarChart", "GPU Temperature BarChart", "Friend List",
+            "Download A File", "Upload A File", "Select Pdf files", "Memory Game",
+            "Dzidza Maths", "Write Exam" };
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        mDatabaseHelper = new DatabaseHelper(this);
-        db = mDatabaseHelper.getWritableDatabase();
-        showUpdateButton = findViewById(R.id.updateShowButton);
-        deleteData = findViewById(R.id.deleteData);
-        showBtn();
-        deleteData();
-
-
-        barChart = findViewById(R.id.mp_BarChart);
+        setListAdapter(new ArrayAdapter<String>(dashboardActivity.this,
+                android.R.layout.simple_list_item_1, classes));
 
     }
 
-    private void showBtn() {
-        showUpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BarDataSet barDataSet = new BarDataSet(dataValue1(), "CPU Temp Reading");
-                BarData barData = new BarData();
-                barData.addDataSet((barDataSet));
 
-                barChart.setData(barData);
-                barChart.invalidate();
-            }
-        });
-    }
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id)
+    {
+        // TODO Auto-generated method stub
+        super.onListItemClick(l, v, position, id);
 
-
-    //Method that deletes data from cpu_temp table and brings us to HomeActivity
-    private void deleteData() {
-        deleteData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 mDatabaseHelper.deleteAll();
-                 startActivity(new Intent(dashboardActivity.this, HomeActivity.class));
-            }
-        });
-    }
-
-    private ArrayList<BarEntry> dataValue1() {
-        ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-        String[] colums = {"ID", "DATE", "CPU_Temp_Value"};
-        Cursor cursor = db.query("cpu_temp", colums, null, null, null, null, null, null);
-
-        for (int i = 0; i < cursor.getCount(); i++) {
-            cursor.moveToNext();
-            dataVals.add(new BarEntry(cursor.getFloat(0), cursor.getFloat(2)));
+        if (position == 0) {
+            Intent intent = new Intent(this,cpuBarChart.class);
+            startActivity(intent);
         }
-        return dataVals;
+        else if (position == 1) {
+            Intent intent = new Intent(this, computerStatActivity.class);
+            startActivity(intent);
+        }
     }
-
-//    private ArrayList<Entry> getDataValues() {
-//        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-//        String[] colums = {"CPU_Temp_Value"};
-//        Cursor cursor = db.query("cpu_temp", colums, null, null, null, null, null, null);
-//
-//        for(int i=0; i<cursor.getCount();i++){
-//            cursor.moveToNext();
-//            dataVals.add(new Entry(cursor.getFloat(0),cursor.getFloat(0)));
-//            Log.e(TAG, "onCancelled: Failed to read message"+cursor.getCount());
-//        }
-//        return dataVals;
-//    }
-
-
-
-
 
 }
