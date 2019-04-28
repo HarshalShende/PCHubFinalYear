@@ -71,7 +71,7 @@
                 android:layout_marginTop="25dp"
                 android:text="61°C"
                 android:textAlignment="center"
-                android:textColor="@color/snowWhite"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -103,14 +103,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="260dp"
                 android:layout_marginTop="25dp"
-                android:text="HDD:"
+                android:text="SSD:"
                 android:textAlignment="center"
                 android:textColor="@color/snowWhite"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/avgHddTemp"
+                android:id="@+id/avgSSDTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"

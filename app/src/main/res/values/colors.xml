@@ -3,7 +3,7 @@
     <color name="colorPrimary">#003b8c</color>
     <color name="colorPrimaryDark">#003b8c</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="magicBlue">#0048aa</color>
+    <color name="magicBlue">#0048AA</color>
     <color name="snowWhite">#ffffff</color>
     <color name="darkNight">#000000</color>
 </resources>

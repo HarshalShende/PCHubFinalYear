@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".charts.cpuBarChart">
+    tools:context=".charts.gpuBarChart">
 
     <Button
         android:id="@+id/ExportPlusDeleteData"
@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="0dp"
         android:text="Export/Delete Data" />
 
     <Button
@@ -23,7 +22,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
         android:text="Load / Update" />
 
     <com.github.mikephil.charting.charts.BarChart
