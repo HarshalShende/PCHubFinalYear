@@ -2,21 +2,18 @@ package com.example.vladislavsvasiljevs.pchub;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.vladislavsvasiljevs.pchub.DatabaseHelpers.DatabaseHelperCPU;
 import com.example.vladislavsvasiljevs.pchub.charts.*;
 
 
 public class dashboardActivity extends ListActivity {
 
-    String classes[] = {"CPU Temperature - Bar Chart", "GPU Temperature - Bar Chart", "SSD Temperature - Bar Chart",
-            "CPU VS GPU Temperature - Line Chart"};
+    String classes[] = {"Processor Temperature [CPU] | Bar Chart", "Graphics Processor Temperature [GPU] - Bar Chart", "Solid State Drive Temperature [SSD] - Bar Chart",
+            "Graphics Processor  Vs Processor  Temperature - Line Chart","Processor Frequency - Line Chart"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +21,6 @@ public class dashboardActivity extends ListActivity {
         setContentView(R.layout.activity_dashboard);
         setListAdapter(new ArrayAdapter<String>(dashboardActivity.this,
                 android.R.layout.simple_list_item_1, classes));
-
-
     }
 
 
@@ -45,6 +40,9 @@ public class dashboardActivity extends ListActivity {
             startActivity(intent);
         } else if (position == 3) {
             Intent intent = new Intent(this, cpuLineChart.class);
+            startActivity(intent);
+        } else if (position == 4) {
+            Intent intent = new Intent(this, cpuFreqLineChart.class);
             startActivity(intent);
         }
     }

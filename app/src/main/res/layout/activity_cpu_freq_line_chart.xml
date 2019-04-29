@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".charts.cpuLineChart">
+    tools:context=".charts.cpuFreqLineChart">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/mp_LineChart1"
@@ -19,14 +21,15 @@
 
         </com.github.mikephil.charting.charts.LineChart>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/mp_LineChart"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp">
 
-        </com.github.mikephil.charting.charts.LineChart>
+        <Button
+            android:id="@+id/ExportPlusDeleteData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Export/Delete Data" />
 
         <Button
             android:id="@+id/updateShowButton"

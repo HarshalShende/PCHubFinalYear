@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".charts.cpuLineChart"></activity>
+        <activity android:name=".settingsActivity"></activity>
+        <activity android:name=".charts.cpuFreqLineChart" />
+        <activity android:name=".charts.cpuLineChart" />
         <activity android:name=".charts.ssdBarChart" />
         <activity android:name=".charts.gpuBarChart" />
         <activity android:name=".charts.cpuBarChart" />

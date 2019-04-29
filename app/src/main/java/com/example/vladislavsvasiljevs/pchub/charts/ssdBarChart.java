@@ -53,16 +53,25 @@ public class ssdBarChart extends AppCompatActivity {
 
         showChart();
         deleteData();
+        genChart();
     }
+
+    private void genChart(){
+        BarDataSet barDataSet = new BarDataSet(tableData(), "SSD Temperature");
+        BarData barData = new BarData();
+        barData.addDataSet((barDataSet));
+        barChart.setData(barData);
+        barChart.invalidate();
+    }
+
 
     private void showChart() {
         showUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BarDataSet barDataSet = new BarDataSet(tableData(), "SSD Temperature Reading");
+                BarDataSet barDataSet = new BarDataSet(tableData(), "SSD Temperature");
                 BarData barData = new BarData();
                 barData.addDataSet((barDataSet));
-
                 barChart.setData(barData);
                 barChart.invalidate();
             }

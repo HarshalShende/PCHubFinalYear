@@ -57,7 +57,7 @@ public class cpuLineChart extends AppCompatActivity {
 
     private void genChart() {
         lineDataSet.setValues(tableData());
-        lineDataSet.setLabel("CPU Temperature");
+        lineDataSet.setLabel("Processor Temperature (CPU)");
         dataSets.clear();
         dataSets.add(lineDataSet);
         lineData = new LineData(dataSets);
@@ -67,7 +67,7 @@ public class cpuLineChart extends AppCompatActivity {
 
 
         lineDataSet2.setValues(tableData2());
-        lineDataSet2.setLabel("GPU Temperature");
+        lineDataSet2.setLabel("Graphics Processor Temperature (GPU)");
         dataSets2.clear();
         dataSets2.add(lineDataSet2);
         lineData2 = new LineData(dataSets2);
@@ -82,7 +82,7 @@ public class cpuLineChart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 lineDataSet.setValues(tableData());
-                lineDataSet.setLabel("CPU Temperature");
+                lineDataSet.setLabel("Processor Temperature (CPU)");
                 dataSets.clear();
                 dataSets.add(lineDataSet);
                 lineData = new LineData(dataSets);
@@ -91,7 +91,7 @@ public class cpuLineChart extends AppCompatActivity {
                 lineChart.invalidate();
 
                 lineDataSet2.setValues(tableData2());
-                lineDataSet2.setLabel("GPU Temperature");
+                lineDataSet2.setLabel("Graphics Processor Temperature (GPU)");
                 dataSets2.clear();
                 dataSets2.add(lineDataSet2);
                 lineData2 = new LineData(dataSets2);

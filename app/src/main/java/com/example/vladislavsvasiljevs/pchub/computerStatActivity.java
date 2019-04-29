@@ -8,10 +8,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vladislavsvasiljevs.pchub.DatabaseHelpers.DatabaseHelperCPU;
-import com.example.vladislavsvasiljevs.pchub.DatabaseHelpers.DatabaseHelperGPU;
-import com.example.vladislavsvasiljevs.pchub.DatabaseHelpers.DatabaseHelperSSD;
+import com.example.vladislavsvasiljevs.pchub.DatabaseHelpers.*;
 import com.example.vladislavsvasiljevs.pchub.Models.computerNameReading;
+import com.example.vladislavsvasiljevs.pchub.Models.cpuFreqReading;
 import com.example.vladislavsvasiljevs.pchub.Models.cpuLoadReading;
 import com.example.vladislavsvasiljevs.pchub.Models.cpuNameReading;
 import com.example.vladislavsvasiljevs.pchub.Models.cpuTempReading;
@@ -36,12 +35,13 @@ public class computerStatActivity extends AppCompatActivity {
     private static final String TAG = "MessageActivity";
 
 
-    SQLiteDatabase db,db2,db3;
+    SQLiteDatabase db, db2, db3, db4;
 
     //private static final String REQUIRED = "Required";
     DatabaseHelperCPU mDatabaseHelperCPU;
     DatabaseHelperGPU mDatabaseHelperGPU;
     DatabaseHelperSSD mDatabaseHelperSSD;
+    DatabaseHelperCPUFreq mDatabaseHelperCPUFreq;
 
     //Average Temperatures
     private TextView avgCpuTemp;//Displays average CPU Temperature
@@ -65,6 +65,10 @@ public class computerStatActivity extends AppCompatActivity {
     private TextView cpuMaxLoadReading;//Displays Max load of CPU
     private TextView gpuCurrentLoadReading;//Displays Current load of GPU
     private TextView gpuMaxLoadReading;//Displays Max load of GPU
+
+    //Processor Frequency
+    private TextView cpuCurrentFreqReading;//Displays Current load of CPU
+    private TextView cpuMaxFreqReading;//Displays Max load of CPU
 
 
     //Computer Information section
@@ -101,7 +105,6 @@ public class computerStatActivity extends AppCompatActivity {
     private ValueEventListener cpuLoadListener;
     private ValueEventListener gpuLoadListener;
 
-
     //Database Reference for Computer Information section
     private DatabaseReference computerNameReference;
     private DatabaseReference motherboardNameReference;
@@ -114,6 +117,15 @@ public class computerStatActivity extends AppCompatActivity {
     private ValueEventListener cpuNameListener;
     private ValueEventListener gpuNameListener;
 
+
+    //Database Reference for Processor Frequency
+    private DatabaseReference cpuFreqReference;
+
+
+    //Value Event Listener for Computer Information section
+    private ValueEventListener cpuFreqListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +133,7 @@ public class computerStatActivity extends AppCompatActivity {
         mDatabaseHelperCPU = new DatabaseHelperCPU(this);
         mDatabaseHelperGPU = new DatabaseHelperGPU(this);
         mDatabaseHelperSSD = new DatabaseHelperSSD(this);
+        mDatabaseHelperCPUFreq = new DatabaseHelperCPUFreq(this);
 
         //Average Temperatures getting ID's
         avgCpuTemp = findViewById(R.id.avgCpuTemp);
@@ -145,6 +158,11 @@ public class computerStatActivity extends AppCompatActivity {
         gpuCurrentLoadReading = findViewById(R.id.gpuCurrentLoadReading);
         gpuMaxLoadReading = findViewById(R.id.gpuMaxLoadReading);
 
+        //Processor Frequency Readings getting ID's
+        cpuCurrentFreqReading = findViewById(R.id.currentFreq);
+        cpuMaxFreqReading = findViewById(R.id.maxFreq);
+
+
         //Computer Information getting ID's
         computerName = findViewById(R.id.computerName);
         motherboardName = findViewById(R.id.motherboardName);
@@ -163,6 +181,9 @@ public class computerStatActivity extends AppCompatActivity {
         cpuLoadReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/2/Children/0");//Link to CPU load readings
         gpuLoadReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/3/Children/2/Children/0");//Link to GPU load readings
 
+        //Processor Frequency Reading - References
+        cpuFreqReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0/Children/1/Children/0/Children/1");//Link to CPU load readings
+
 
         //Computer Information Readings - References
         computerNameReference = FirebaseDatabase.getInstance().getReference("PCHub/ComputerStatistics/number/Children/0");//Link to Computers name reading
@@ -174,6 +195,7 @@ public class computerStatActivity extends AppCompatActivity {
         db = mDatabaseHelperCPU.getWritableDatabase();
         db2 = mDatabaseHelperGPU.getWritableDatabase();
         db3 = mDatabaseHelperSSD.getWritableDatabase();
+        db4 = mDatabaseHelperCPUFreq.getWritableDatabase();
     }
 
     @Override
@@ -182,6 +204,7 @@ public class computerStatActivity extends AppCompatActivity {
 
         //CPU Temp Readings from FireBase
         ValueEventListener cpuListener = new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -195,10 +218,11 @@ public class computerStatActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");//Formatting date and time to be dd/mm/yyyy
                     String formattedDate = df.format(c);
                     String changeToString = cpuTempReading.Value;//Storing cpuTempReading in changeToString
-                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+","");//Removing degree sign from our string
-                    AddCPUData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
-                    Log.e(TAG, "onCancelled: Failed to read message"+changeToString);
-                    avgCpuTemp.setText(Integer.toString(get_AvgCPU())+"°C");//Getting the average
+                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+", "");//Removing degree sign from our string
+                    AddCPUData(formattedDate, changeToString);//Adding the cleaned up string to our local sqlite database
+                    Log.e(TAG, "onCancelled: Failed to read message" + changeToString);
+                    avgCpuTemp.setText(Integer.toString(get_AvgCPU()) + "°C");//Getting the average
+
                 }
             }
 
@@ -211,6 +235,7 @@ public class computerStatActivity extends AppCompatActivity {
                 cpuMaxTempReading.setText("");
             }
         };
+
         cpuTempReference.addValueEventListener(cpuListener);
 
         // copy for removing at onStop()
@@ -233,9 +258,9 @@ public class computerStatActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");//Formatting date and time to be dd/mm/yyyy
                     String formattedDate = df.format(c);
                     String changeToString = gpuTempReading.Value;//Storing cpuTempReading in changeToString
-                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+","");//Removing degree sign from our string
-                    AddGPUData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
-                    avgGpuTemp.setText(Integer.toString(get_AvgGPU())+"°C");
+                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+", "");//Removing degree sign from our string
+                    AddGPUData(formattedDate, changeToString);//Adding the cleaned up string to our local sqlite database
+                    avgGpuTemp.setText(Integer.toString(get_AvgGPU()) + "°C");
                 }
             }
 
@@ -298,10 +323,10 @@ public class computerStatActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");//Formatting date and time to be dd/mm/yyyy
                     String formattedDate = df.format(c);
                     String changeToString = ssdTempReading.Value;//Storing cpuTempReading in changeToString
-                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+","");//Removing degree sign from our string
-                    AddSSDData(formattedDate,changeToString);//Adding the cleaned up string to our local sqlite database
-                    Log.e(TAG, "onCancelled: Failed to read message"+changeToString);
-                    avgSSDTemp.setText(Integer.toString(get_AvgSSD())+"°C");//Getting the average
+                    changeToString = changeToString.replaceAll("[^a-zD-Z0-9.]+", "");//Removing degree sign from our string
+                    AddSSDData(formattedDate, changeToString);//Adding the cleaned up string to our local sqlite database
+                    Log.e(TAG, "onCancelled: Failed to read message" + changeToString);
+                    avgSSDTemp.setText(Integer.toString(get_AvgSSD()) + "°C");//Getting the average
                 }
             }
 
@@ -377,7 +402,7 @@ public class computerStatActivity extends AppCompatActivity {
 
         // copy for removing at onStop()
         gpuLoadListener = gpuloadListener;
-//End of Computer Load Reading Section
+        //End of Computer Load Reading Section
 
 
         //Computer Name from FireBase
@@ -487,14 +512,47 @@ public class computerStatActivity extends AppCompatActivity {
         // copy for removing at onStop()
         gpuNameListener = gpunameListener;
 
+        //CPU Freq Readings from FireBase
+        ValueEventListener cpufreqListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    cpuFreqReading cpuFreqReading = dataSnapshot.getValue(cpuFreqReading.class);
 
+                    // Log.e(TAG, "onDataChange: Message data is updated: " + cpuTempReading.Value + ", " + ", ");
+
+                    cpuCurrentFreqReading.setText(cpuFreqReading.Value);
+                    cpuMaxFreqReading.setText(cpuFreqReading.Max);
+                    Date c = Calendar.getInstance().getTime();//Getting time and date
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");//Formatting date and time to be dd/mm/yyyy
+                    String formattedDate = df.format(c);
+                    String changeToString = cpuFreqReading.Value;//Storing cpuTempReading in changeToString
+                    changeToString = changeToString.replaceAll("[MHz]+", "");//Removing degree sign from our string
+                    Log.e(TAG, "what"+changeToString);
+                    AddCPUFreqData(formattedDate, changeToString);//Adding the cleaned up string to our local sqlite database
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "onCancelled: Failed to read message");
+
+                cpuCurrentFreqReading.setText("");
+                cpuMaxFreqReading.setText("");
+            }
+        };
+        cpuFreqReference.addValueEventListener(cpufreqListener);
+
+        // copy for removing at onStop()
+        cpuFreqListener = cpufreqListener;
 
 
     }
 
 
-    public void AddCPUData(String newEntry,String newEntry2) {
-        boolean insertData = mDatabaseHelperCPU.addCPUData(newEntry,newEntry2);
+    public void AddCPUData(String newEntry, String newEntry2) {
+        boolean insertData = mDatabaseHelperCPU.addCPUData(newEntry, newEntry2);
 
         if (insertData) {
             toastMessage("Data Successfully Inserted! CPU");
@@ -503,8 +561,8 @@ public class computerStatActivity extends AppCompatActivity {
         }
     }
 
-    public void AddGPUData(String newEntry,String newEntry2) {
-        boolean insertData = mDatabaseHelperGPU.addGPUData(newEntry,newEntry2);
+    public void AddGPUData(String newEntry, String newEntry2) {
+        boolean insertData = mDatabaseHelperGPU.addGPUData(newEntry, newEntry2);
 
         if (insertData) {
             toastMessage2("Data Successfully Inserted! GPU");
@@ -513,8 +571,8 @@ public class computerStatActivity extends AppCompatActivity {
         }
     }
 
-    public void AddSSDData(String newEntry,String newEntry2) {
-        boolean insertData = mDatabaseHelperSSD.addSSDData(newEntry,newEntry2);
+    public void AddSSDData(String newEntry, String newEntry2) {
+        boolean insertData = mDatabaseHelperSSD.addSSDData(newEntry, newEntry2);
 
         if (insertData) {
             toastMessage3("Data Successfully Inserted! SSD");
@@ -523,50 +581,57 @@ public class computerStatActivity extends AppCompatActivity {
         }
     }
 
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    public void AddCPUFreqData(String newEntry, String newEntry2) {
+        boolean insertData = mDatabaseHelperCPUFreq.addCPUFreqData(newEntry, newEntry2);
+
+        if (insertData) {
+            toastMessage4("Data Successfully Inserted! Freq");
+        } else {
+            toastMessage4("Something went wrong");
+        }
     }
 
-    private void toastMessage2(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void toastMessage3(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    private void toastMessage2(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-//    private void toastMessage2(String message){
-//        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-//    }
+    private void toastMessage3(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
 
-    public int get_AvgCPU(){
-        String query= "SELECT AVG(CPU_Temp_Value) From cpu_temp";
+    private void toastMessage4(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public int get_AvgCPU() {
+        String query = "SELECT AVG(CPU_Temp_Value) From cpu_temp";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        int AverageValue=c.getInt(0);
+        int AverageValue = c.getInt(0);
         return AverageValue;
     }
 
-    public int get_AvgGPU(){
-        String query= "SELECT AVG(GPU_Temp_Value) From gpu_temp";
+    public int get_AvgGPU() {
+        String query = "SELECT AVG(GPU_Temp_Value) From gpu_temp";
         Cursor c = db2.rawQuery(query, null);
         c.moveToFirst();
-        int AverageValue=c.getInt(0);
+        int AverageValue = c.getInt(0);
         return AverageValue;
     }
 
-    public int get_AvgSSD(){
-        String query= "SELECT AVG(SSD_Temp_Value) From ssd_temp";
+    public int get_AvgSSD() {
+        String query = "SELECT AVG(SSD_Temp_Value) From ssd_temp";
         Cursor c = db3.rawQuery(query, null);
         c.moveToFirst();
-        int AverageValue=c.getInt(0);
+        int AverageValue = c.getInt(0);
         return AverageValue;
     }
-
-
-
-
 
 
 }

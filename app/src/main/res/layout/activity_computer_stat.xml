@@ -428,6 +428,78 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
+            android:text="Processor Frequency"
+            android:textAlignment="center"
+            android:textColor="@color/darkNight"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!---->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/magicBlue"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="25dp"
+                android:text="Current:"
+                android:textAlignment="center"
+                android:textColor="@color/snowWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/currentFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="25dp"
+                android:text="3492 MHz"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="25dp"
+                android:text="Max:"
+                android:textAlignment="center"
+                android:textColor="@color/snowWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/maxFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="310dp"
+                android:layout_marginTop="25dp"
+                android:text="3492 MHz"
+                android:textAlignment="center"
+                android:textColor="@color/snowWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </android.support.v7.widget.CardView>
+        <!---->
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:text="Computer Information"
             android:textAlignment="center"
             android:textColor="@color/darkNight"

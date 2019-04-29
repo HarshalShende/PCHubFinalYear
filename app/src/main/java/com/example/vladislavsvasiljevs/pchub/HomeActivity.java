@@ -2,21 +2,16 @@ package com.example.vladislavsvasiljevs.pchub;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridLayout;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,8 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import java.time.OffsetDateTime;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -67,6 +60,21 @@ public class HomeActivity extends AppCompatActivity {
         goToDashboard();//Calling method to bring us to Dashboard screen
         computerOnButton();//Calling method to trigger button
         computerOffButton();//Calling method to trigger button
+    }
+    //Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+    //Sending user to another view after they tap on settings
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.Setting){
+            Intent intent = new Intent(HomeActivity.this, settingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void computerOnButton() {//Method that turns on the computer
@@ -219,6 +227,7 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
+
 }
 
 

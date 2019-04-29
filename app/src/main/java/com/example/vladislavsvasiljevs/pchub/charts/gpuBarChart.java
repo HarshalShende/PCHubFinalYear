@@ -51,6 +51,16 @@ public class gpuBarChart extends AppCompatActivity {
         barChart = findViewById(R.id.mp_BarChart);
         showChart();
         deleteData();
+        genChart();
+
+    }
+
+    private void genChart(){
+        BarDataSet barDataSet = new BarDataSet(tableData(), "Graphics Processor Temperature (GPU)");
+        BarData barData = new BarData();
+        barData.addDataSet((barDataSet));
+        barChart.setData(barData);
+        barChart.invalidate();
 
     }
 
@@ -58,10 +68,9 @@ public class gpuBarChart extends AppCompatActivity {
         showUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BarDataSet barDataSet = new BarDataSet(tableData(), "GPU Temperature Reading");
+                BarDataSet barDataSet = new BarDataSet(tableData(), "Graphics Processor Temperature (GPU)");
                 BarData barData = new BarData();
                 barData.addDataSet((barDataSet));
-
                 barChart.setData(barData);
                 barChart.invalidate();
             }
