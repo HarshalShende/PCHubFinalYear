@@ -5,6 +5,7 @@ from firebase import firebase
 import sys
 from pyfcm import FCMNotification
 
+
 firebase = firebase.FirebaseApplication('https://pchub-2018.firebaseio.com/')  # Firebase url
 firebaseURL = 'https://pchub-2018.firebaseio.com/'  # FirebasURL on its own so we can use it throughout the script
 push_service = FCMNotification(api_key="AAAA4_XhGR8:APA91bEcmjPYhU5sPgr549gen8c3Xl1wvMJDASHDsqMExExfZwT2dWRJ7MkGYGMSps62Gf_3a-xja_jlefzGmRcFAzEkN0yCOvQAVa4ITrybTHEp10VeTBuaoIzCWpbeVQRH_TkZbl4o")
@@ -64,6 +65,7 @@ def GPUTempAlert():
 
 while True:
     #User set temp limits
+    print ("Working")
     CPUTempLimit = firebase.get(firebaseURL, '/EmailNotification/CPUTempAlert')
     GPUTempLimit = firebase.get(firebaseURL, '/EmailNotification/GPUTempAlert')
     #Returning values from firebase that contains temp readings from hardware, such as CPU,GPU etc
@@ -71,14 +73,14 @@ while True:
     currentGPUTemp = firebase.get(firebaseURL, '/PCHub/ComputerStatistics/number/Children/0/Children/3/Children/1/Children/0/Value') 
     if currentCPUTemp >= CPUTempLimit:
         CPUTempAlert()
-        registration_id = "eDMylVCYWws:APA91bG1YJmttle8Rm8XWAArxSZCG8tGKLiVK3jqUZz-3gy832XSq7lEtwf0ozfURhRHLMycOh4F9uNaaSMrAOkgatMbFUxE7iZ7NlIgisuKpGFSIja66ZQkuBfajm7UPi3aQlJW1E89"
+        registration_id = firebase.get(firebaseURL, '/zTokenID')
         message_title = "CPU Alert - Attention Needed"
         message_body = "Your CPU has reached the temperature limit you have set, please check on your computer "+"Your computers current CPU tempareture is "+currentCPUTemp
         result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
         print (result)
     if currentGPUTemp >= GPUTempLimit:
         GPUTempAlert()
-        registration_id = "eDMylVCYWws:APA91bG1YJmttle8Rm8XWAArxSZCG8tGKLiVK3jqUZz-3gy832XSq7lEtwf0ozfURhRHLMycOh4F9uNaaSMrAOkgatMbFUxE7iZ7NlIgisuKpGFSIja66ZQkuBfajm7UPi3aQlJW1E89"
+        registration_id = firebase.get(firebaseURL, '/zTokenID')
         message_title = "GPU Alert - Attention Needed"
         message_body = "Your GPU has reached the temperature limit you have set, please check on your computer "+"Your computers current GPU tempareture is "+currentGPUTemp
         result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
