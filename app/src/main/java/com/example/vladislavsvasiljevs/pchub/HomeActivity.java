@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();//Getting database reference
 
         //Getting our FCM token, which gets printed in logcat
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -46,11 +46,12 @@ public class HomeActivity extends AppCompatActivity {
                         String token = task.getResult().getToken();
                         String msg = getString(R.string.fcm_token, token);
                         Log.d(TAG, msg);
+                        databaseReference.child("zTokenID").setValue(token);
                     }
                 });
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();//Getting database reference
+
 
         offButtonGONE();//By default the turn off button is set to GONE, When On button clicked, then this button will appear
 
@@ -228,6 +229,7 @@ public class HomeActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    
 }
 
 
