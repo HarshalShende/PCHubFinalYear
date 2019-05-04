@@ -34,8 +34,7 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
     @BindView(R.id.colorPicker)
     ColorPickerView colorPickerView;
-    @BindView(R.id.colorHex)
-    TextView colorHex;
+
 
 
     @Override
@@ -83,7 +82,7 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
         colorPickerView.subscribe((color, fromUser) -> {
             //pickedColor.setBackgroundColor(color);
-            colorHex.setText(colorHex(color));
+//            colorHex.setText(colorHex(color));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(color);
             }
@@ -211,18 +210,3 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
     }
 }
-
-//    //Converting RGB to Hex
-//    private String colorHex2(int color) {
-//        int a = Color.alpha(color);
-//        int r = Color.red(color);
-//        int g = Color.green(color);
-//        int b = Color.blue(color);
-//        String red = String.format(Locale.getDefault(), "02X%02X%02X%02X", a, r, g, b);
-//        return red;
-//    }
-
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
