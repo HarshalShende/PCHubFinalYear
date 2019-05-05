@@ -150,6 +150,12 @@
             app:cardBackgroundColor="@color/magicBlue"
             app:cardCornerRadius="20dp">
 
+            <TextView
+                android:id="@+id/colorHex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/magicBlue" />
+
 
             <TextView
                 android:id="@+id/ColourWheelTxt"

@@ -34,6 +34,8 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
     @BindView(R.id.colorPicker)
     ColorPickerView colorPickerView;
+    @BindView(R.id.colorHex)
+    TextView colorHex;
 
 
 
@@ -82,7 +84,7 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
         colorPickerView.subscribe((color, fromUser) -> {
             //pickedColor.setBackgroundColor(color);
-//            colorHex.setText(colorHex(color));
+            colorHex.setText(colorHex(color));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(color);
             }
