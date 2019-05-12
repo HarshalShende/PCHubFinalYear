@@ -141,12 +141,6 @@
         </android.support.v7.widget.CardView>
 
 
-        <TextView
-            android:id="@+id/colorHex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="484dp"
@@ -155,6 +149,12 @@
             android:layout_marginRight="16dp"
             app:cardBackgroundColor="@color/magicBlue"
             app:cardCornerRadius="20dp">
+
+            <TextView
+                android:id="@+id/colorHex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/magicBlue" />
 
 
             <TextView

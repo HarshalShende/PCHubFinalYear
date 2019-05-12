@@ -38,6 +38,7 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
     TextView colorHex;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,18 +212,3 @@ public class lightControlActivity extends AppCompatActivity implements View.OnCl
 
     }
 }
-
-//    //Converting RGB to Hex
-//    private String colorHex2(int color) {
-//        int a = Color.alpha(color);
-//        int r = Color.red(color);
-//        int g = Color.green(color);
-//        int b = Color.blue(color);
-//        String red = String.format(Locale.getDefault(), "02X%02X%02X%02X", a, r, g, b);
-//        return red;
-//    }
-
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
