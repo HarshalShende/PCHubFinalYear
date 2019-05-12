@@ -1,17 +1,31 @@
 #coding: utf-8
 import smtplib
 import time
-from firebase import firebase
+from firebase import firebase #Importing firebase
 import sys
-from pyfcm import FCMNotification
+from pyfcm import FCMNotification #Importing FCMNotifications
+from twilio.rest import Client #Importaing Twilio library that allows us to send SMS to our phone
+import configTwilio #importing configTwilio.py file to this class
 
 
-firebase = firebase.FirebaseApplication('https://pchub-2018.firebaseio.com/')  # Firebase url
-firebaseURL = 'https://pchub-2018.firebaseio.com/'  # FirebasURL on its own so we can use it throughout the script
-push_service = FCMNotification(api_key="AAAA4_XhGR8:APA91bEcmjPYhU5sPgr549gen8c3Xl1wvMJDASHDsqMExExfZwT2dWRJ7MkGYGMSps62Gf_3a-xja_jlefzGmRcFAzEkN0yCOvQAVa4ITrybTHEp10VeTBuaoIzCWpbeVQRH_TkZbl4o")
+firebase = firebase.FirebaseApplication('https://pchub-2018.firebaseio.com/') #Pointing to our Firebase through URL
+firebaseURL = 'https://pchub-2018.firebaseio.com/'  #Firebase stored in variable so we can call it any in the file
+push_service = FCMNotification(api_key="AAAA4_XhGR8:APA91bEcmjPYhU5sPgr549gen8c3Xl1wvMJDASHDsqMExExfZwT2dWRJ7MkGYGMSps62Gf_3a-xja_jlefzGmRcFAzEkN0yCOvQAVa4ITrybTHEp10VeTBuaoIzCWpbeVQRH_TkZbl4o") #API key for firebase
 
-def CPUTempAlert():
-   
+#Method which sends a SMS to users mobile number
+def sendSMSToMobile(body):
+	client = Client(configTwilio.account_sid, configTwilio.auth_token) #Getting account_sid and auth_token info from configTwilio.py file and storing that information in client varaible
+	#Creating a message which also has the client information
+	#sms_to = what phone number we are going to send info to
+	#sms_from = which phone number will be used to send the message Twilio provides the number.
+	message = client.messages.create(
+		to = configTwilio.sms_to,
+		from_ = configTwilio.sms_from_,
+		body = body)
+	print (message.sid)
+
+#Method which sends the user an email if temp of CPU reach a certain point
+def CPUTempAlert(): 
     username = "123hello2020@gmail.com"
     password = "dingatding2020"
     FROM = "123hello2020@gmail.com"
@@ -19,9 +33,6 @@ def CPUTempAlert():
     SUBJECT = "CPU Temperature Limit Trigged"
     TEXT = "Your CPU has reached has reached the limit you have set, please check up on your computer as something is not right."
     message = """\From: %s\nTo: %s\nSubject: %s\n\n%s """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
-    
-    #temp = firebase.get(firebaseURL, '/PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/6/Value')
-    #if (temp >= "83.0 °C"):
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587) #or port 465 doesn't seem to work!
         server.ehlo()
@@ -35,9 +46,8 @@ def CPUTempAlert():
     except:
         print ("failed to send mail")
         
-        
+#Method which sends the user an email if temp of GPU reach a certain point   
 def GPUTempAlert():
-   
     username = "123hello2020@gmail.com"
     password = "dingatding2020"
     FROM = "123hello2020@gmail.com"
@@ -49,7 +59,7 @@ def GPUTempAlert():
     #temp = firebase.get(firebaseURL, '/PCHub/ComputerStatistics/number/Children/0/Children/1/Children/1/Children/6/Value')
     #if (temp >= "83.0 °C"):
     try:
-        server = smtplib.SMTP("smtp.gmail.com", 587) #or port 465 doesn't seem to work!
+        server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
         server.starttls()
         server.login(username, password)
@@ -77,6 +87,8 @@ while True:
         message_title = "CPU Alert - Attention Needed"
         message_body = "Your CPU has reached the temperature limit you have set, please check on your computer "+"Your computers current CPU tempareture is "+currentCPUTemp
         result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
+        body = "CPU Temp have reached the limit you have set, please check on your computer" #Message for the sms
+        sendSMSToMobile(body) #Calling sendSMSToMobile method with body, which is the message that will be sent to the user.
         print (result)
     if currentGPUTemp >= GPUTempLimit:
         GPUTempAlert()
@@ -84,6 +96,8 @@ while True:
         message_title = "GPU Alert - Attention Needed"
         message_body = "Your GPU has reached the temperature limit you have set, please check on your computer "+"Your computers current GPU tempareture is "+currentGPUTemp
         result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
+        body = "GPU Temp have reached the limit you have set, please check on your computer" #Message for the sms
+        sendSMSToMobile(body) #Calling sendSMSToMobile method with body, which is the message that will be sent to the user.
         print (result)
     Frequency = firebase.get(firebaseURL, '/EmailNotification/FrequencyOfNotifications')
     time.sleep(Frequency)   

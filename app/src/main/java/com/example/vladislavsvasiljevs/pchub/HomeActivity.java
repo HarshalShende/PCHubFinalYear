@@ -186,7 +186,7 @@ public class HomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
                         databaseReference.child("computerControl").setValue(1);
                         onButtonGONE();
                         offButtonVisible();
@@ -195,7 +195,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
             }
         });
         AlertDialog alertDialog = dialog.create();
@@ -213,7 +213,7 @@ public class HomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
                         databaseReference.child("computerControl").setValue(1);
                         onButtonVisible();
                         offButtonGONE();
@@ -222,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), "cancel is clicked", Toast.LENGTH_LONG).show();
             }
         });
         AlertDialog alertDialog = dialog.create();
